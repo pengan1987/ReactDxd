@@ -9,7 +9,7 @@ gulp.task('sass', function () {
         .pipe(browserSync.stream());
 });
 
-gulp.task('serve', function () {
+gulp.task('default', function () {
     browserSync.init({
         proxy: "localhost:8080"
     });
