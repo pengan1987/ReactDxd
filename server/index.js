@@ -48,8 +48,8 @@ app.post('/update/:id', function (req, res) {
     });
 });
 
-app.get('/delete/:id', function (req, res) {
-    Student.findById(req.params.id).remove(function (err, doc) {
+app.post('/delete', function (req, res) {
+    Student.remove({_id: req.body._id}, function (err, doc) {
         res.send(doc);
     })
 });

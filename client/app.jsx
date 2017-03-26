@@ -40,11 +40,13 @@ var Student = React.createClass({
                 console.log(error);
             });
     },
-    toggleDelete: function () {
-        axios.get("http://localhost:3000/delete/" + this.state._id)
+    handleDelete: function () {
+        var reactThis = this;
+        var studentObject = this.state;
+        axios.post("http://localhost:3000/delete/", this.state)
             .then(function (response) {
                 console.log(response.data);
-                window.location.reload();
+                reactThis.props.remove(studentObject)
             })
             .catch(function (error) {
                 console.log(error);
@@ -64,7 +66,7 @@ var Student = React.createClass({
                 <p>Age: {this.state.age}</p>
                 <p>Email: {this.state.email}</p>
                 <button className="btn btn-success" onClick={this.toggleEditing}>Edit</button>
-                <button className="btn btn-danger" onClick={this.toggleDelete}>Delete</button>
+                <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
 
             </div>
         );
@@ -113,18 +115,26 @@ var StudentList = React.createClass({
                 console.log(error);
             });
     },
-
+    removeFromList: function (obj) {
+        var oldStudentList = this.state.studentList;
+        var newStudentList = oldStudentList.filter(function (student) {
+            return student._id !== obj._id;
+        });
+        var newState = this.state;
+        newState.studentList = newStudentList;
+        this.setState(newState);
+    },
     handleClick: function () {
         console.log("Click");
     },
     render: function () {
-
+        var reactThis = this;
         return (<div className="col-lg-12">
             {
                 this.state
                     .studentList
                     .map(function (currentStudent) {
-                            return <Student data={currentStudent} key={currentStudent._id}/>
+                            return <Student data={currentStudent} key={currentStudent._id} remove={reactThis.removeFromList}/>
                         }
                     )
             }
