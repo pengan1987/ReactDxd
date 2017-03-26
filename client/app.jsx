@@ -52,34 +52,40 @@ var Student = React.createClass({
     },
     render: function () {
         console.log(this.props);
-        var nameNode = <h2 onClick={this.handleClick}>{this.props.data.firstName}</h2>;
+        var nameNode = (
+            <div className="panel panel-default">
+                <h2 onClick={this.handleClick}>{this.props.data.firstName}</h2>
+            </div>);
         var fullNode = (
-            <div>
+            <div className="panel panel-default">
+
                 <p>First Name: {this.state.firstName}</p>
                 <p>Last Name: {this.state.lastName}</p>
                 <p>Age: {this.state.age}</p>
                 <p>Email: {this.state.email}</p>
-                <button onClick={this.toggleEditing}>Edit</button>
-                <button onClick={this.toggleDelete}>Delete</button>
-                <hr />
+                <button className="btn btn-success" onClick={this.toggleEditing}>Edit</button>
+                <button className="btn btn-danger" onClick={this.toggleDelete}>Delete</button>
+
             </div>
         );
         var editingNode = (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="firstName" placeholder="First Name"
-                       onChange={this.handleChange} value={this.state.firstName}/>
-                <br/>
-                <input type="text" name="lastName" placeholder="Last Name"
-                       onChange={this.handleChange} value={this.state.lastName}/>
-                <br/>
-                <input type="text" name="age" placeholder="Age"
-                       onChange={this.handleChange} value={this.state.age}/>
-                <br/>
-                <input type="text" name="email" placeholder="Email"
-                       onChange={this.handleChange} value={this.state.email}/>
-                <br/>
-                <button>Submit</button>
-            </form>
+            <div className="panel panel-default">
+                <form onSubmit={this.handleSubmit}>
+                    <input className="form-control" type="text" name="firstName" placeholder="First Name"
+                           onChange={this.handleChange} value={this.state.firstName}/>
+                    <br/>
+                    <input className="form-control" type="text" name="lastName" placeholder="Last Name"
+                           onChange={this.handleChange} value={this.state.lastName}/>
+                    <br/>
+                    <input className="form-control" type="text" name="age" placeholder="Age"
+                           onChange={this.handleChange} value={this.state.age}/>
+                    <br/>
+                    <input className="form-control" type="text" name="email" placeholder="Email"
+                           onChange={this.handleChange} value={this.state.email}/>
+                    <br/>
+                    <button className="btn btn-primary">Submit</button>
+                </form>
+            </div>
         );
         if (this.state.firstName === null)
             return nameNode;
@@ -113,7 +119,7 @@ var StudentList = React.createClass({
     },
     render: function () {
 
-        return (<div>
+        return (<div className="col-lg-12">
             {
                 this.state
                     .studentList
@@ -154,13 +160,20 @@ var StudentForm = React.createClass({
     },
     render: function () {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="firstName" placeholder="First Name" onChange={this.handleChange}/>
-                <input type="text" name="lastName" placeholder="Last Name" onChange={this.handleChange}/>
-                <input type="text" name="age" placeholder="Age" onChange={this.handleChange}/>
-                <input type="text" name="email" placeholder="Email" onChange={this.handleChange}/>
-                <button>Submit</button>
-            </form>
+            <div className="col-lg-6">
+                <h4>Add new data here</h4>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" className="form-control" name="firstName" placeholder="First Name"
+                           onChange={this.handleChange}/>
+                    <input type="text" className="form-control" name="lastName" placeholder="Last Name"
+                           onChange={this.handleChange}/>
+                    <input type="text" className="form-control" name="age" placeholder="Age"
+                           onChange={this.handleChange}/>
+                    <input type="text" className="form-control" name="email" placeholder="Email"
+                           onChange={this.handleChange}/>
+                    <button className="btn btn-success">Submit</button>
+                </form>
+            </div>
         )
     }
 });
