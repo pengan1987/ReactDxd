@@ -59,16 +59,33 @@ app.get('/chat', function (req, res) {
     res.sendfile('./chat.html');
 });
 
+var sessionMap = [];
+
 io.on('connection', function (socket) {
     console.log('a user connected');
+    var socketId = socket.id;
 
     socket.on('chat message', function (msg) {
+        if (sessionMap[socketId] === undefined)
+            sessionMap[socket.id] = getRandomColor();
+        var sessionColor = sessionMap[socket.id];
+        console.log(sessionColor);
+        msg.sessionColor = sessionColor;
         console.log('message:' + msg);
-        io.emit('chat message',msg);
+        io.emit('chat message', msg);
     });
-    socket.on('disconnect',function (msg) {
+    socket.on('disconnect', function (msg) {
         console.log('a user disconnected')
     });
 });
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 http.listen(3000);

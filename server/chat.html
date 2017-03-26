@@ -43,8 +43,10 @@
                     displayString += " 默默不语";
                 else
                     displayString = displayString + " said: " + messageContent;
-
-                $('#messages').append($('<li>').text(displayString));
+                var newLine = $('<li>').text(displayString);
+                console.log(msg);
+                newLine.css("color",msg.sessionColor) ;
+                $('#messages').append(newLine);
             });
         });
     </script>
